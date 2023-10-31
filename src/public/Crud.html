@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>CSV Data Table</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+
+</head>
+
+<body>
+    <h2 class="mb-3">CSV Data Table</h2>
+    <!-- Button to open the Add Employee modal -->
+    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal"
+        onclick="displayAddUserModal()">Add Employee</button>
+    <table class="table">
+        <!-- Table headers here -->
+        <thead>
+            <tr>
+                <!-- Your table headers here -->
+                <th>id</th>
+                <th>Employee id</th>
+                <th>Employee Name</th>
+                <th>Employee Department</th>
+                <th>Employee Email</th>
+                <th>Employee salary</th>
+                <th>Employee phoneno</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody id="data-table-body">
+            <!-- Dynamic table rows will be added here using JavaScript -->
+        </tbody>
+    </table>
+    <!-- Modal for adding a new employee -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Add Employee</h5>
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> -->
+                </div>
+                <div class="modal-body">
+                    <!-- Employee form here -->
+                    <form id="employee-form">
+                        <!-- Form fields here -->
+                        <div class="form-group">
+                            <label for="empid">Employee id:</label>
+                            <input type="text" name="empid" id="empid" placeholder="Employee ID" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Name">Employee Name:</label>
+                            <input type="text" name="Name" id="Name" placeholder="Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Department">Employee Department:</label>
+                            <input type="text" name="Department" id="Department" placeholder="Department" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Email">Employee Email:</label>
+                            <input type="text" name="Email" id="Email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="salary">Employee salary:</label>
+                            <input type="text" name="salary" id="salary" placeholder="Salary" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneno">Employee phoneno:</label>
+                            <input type="text" name="phoneno" id="phoneno" placeholder="Phone Number" required>
+                        </div>
+                        <button type="submit" id="AddEntry">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myUpdateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Update Employee</h5>
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> -->
+                </div>
+                <div class="modal-body">
+                    <!-- Employee form here -->
+                    <form id="update-employee-form">
+                        <!-- Form fields here -->
+                        <div class="form-group">
+                            <label for="empid">Employee id:</label>
+                            <input type="text" name="updateempid" id="updateempid" placeholder="Employee ID" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Name">Employee Name:</label>
+                            <input type="text" name="updateName" id="updateName" placeholder="Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Department">Employee Department:</label>
+                            <input type="text" name="updateDepartment" id="updateDepartment" placeholder="Department"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Email">Employee Email:</label>
+                            <input type="text" name="updateEmail" id="updateEmail" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="salary">Employee salary:</label>
+                            <input type="text" name="updatesalary" id="updatesalary" placeholder="Salary" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phoneno">Employee phoneno:</label>
+                            <input type="text" name="updatephoneno" id="updatephoneno" placeholder="Phone Number"
+                                required>
+                        </div>
+                        <button type="submit">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <div class="modal fade" id="myDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Delete Employee</h5>
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> -->
+                </div>
+                <div class="modal-body">
+                    <!-- Employee form here -->
+                    <form id="delete-employee-form">
+                        <!-- Form fields here -->
+                        <div class="form-group">
+                            <label for="empid">Employee id:</label>
+                            <input type="text" name="deleteempid" id="deleteempid" placeholder="Employee ID" required>
+                        </div>
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Include Bootstrap JavaScript and jQuery (after jQuery) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <!-- Your JavaScript code for populating the table and handling form submission -->
+    <script>
+        // JavaScript code for populating the table with data fetched from the server
+        // ...
+
+        function createDeleteButton(employeeId) {
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.className = 'btn btn-primary';
+            deleteButton.onclick = function () {
+                // Handle the update functionality here using the employeeId
+                debugger;
+                const row = this.closest('tr');
+                if (row) {
+                    const deleteempid = row.cells[1].textContent;
+
+                    // Set the modal's input fields with the data
+                    document.getElementById('deleteempid').value = deleteempid;
+
+                    $('#myDeleteModal').modal('show'); // Open the Update modal
+                }
+           };
+            return deleteButton;
+        }
+        function createUpdateButton(employeeId) {
+            const updateButton = document.createElement('button');
+            updateButton.textContent = 'Update';
+            updateButton.className = 'btn btn-primary';
+            updateButton.onclick = function () {
+                // Handle the update functionality here using the employeeId
+                debugger;
+                const row = this.closest('tr');
+                if (row) {
+                    const updateempid = row.cells[1].textContent;
+                    const UpdateName = row.cells[2].textContent;
+                    const UpdateDepartment = row.cells[3].textContent;
+                    const UpdateEmailid = row.cells[4].textContent;
+                    const Updatesalary = row.cells[5].textContent;
+                    const Updatephoneno = row.cells[6].textContent;
+
+                    // Set the modal's input fields with the data
+                    document.getElementById('updateempid').value = updateempid;
+                    document.getElementById('updateName').value = UpdateName;
+                    document.getElementById('updateDepartment').value = UpdateDepartment;
+                    document.getElementById('updateEmail').value = UpdateEmailid;
+                    document.getElementById('updatesalary').value = Updatesalary;
+                    document.getElementById('updatephoneno').value = Updatephoneno;
+
+                    $('#myUpdateModal').modal('show'); // Open the Update modal
+                }
+            };
+            return updateButton;
+        }
+
+        // JavaScript code for populating the table with data fetched from the server
+        async function fetchDataAndPopulateTable() {
+            try {
+                const response = await fetch('/fetch-data'); // Assuming you have a route to fetch data
+                const data = await response.json();
+                const tbody = document.getElementById('data-table-body');
+
+                data.forEach(row => {
+                    const tr = document.createElement('tr');
+                    // Populate the table cells for each data property
+                    tr.innerHTML = `
+        <td>${row.id}</td>
+        <td>${row.empid}</td>
+        <td>${row.Name}</td>
+        <td>${row.Department}</td>
+        <td>${row.Email}</td>
+        <td>${row.salary}</td>
+        <td>${row.phoneno}</td>
+      `;
+
+                    // Create an "Update" button cell for each row using the createUpdateButton function
+                    const updateButtonCell = document.createElement('td');
+                    const updateButton = createUpdateButton(row.EmployeeId);
+                    updateButtonCell.appendChild(updateButton);
+                    tr.appendChild(updateButtonCell);
+
+                    tbody.appendChild(tr);
+                    const deleteButtonCell = document.createElement('td');
+                    const deleteButton = createDeleteButton(row.EmployeeId);
+                    deleteButtonCell.appendChild(deleteButton);
+                    tr.appendChild(deleteButtonCell);
+
+                    tbody.appendChild(tr);
+                });
+            } catch (error) {
+                console.error('Error fetching and populating data:', error);
+                // Handle error, e.g., display an error message
+            }
+        }
+
+
+        // Call the function to populate the table when the page loads
+        fetchDataAndPopulateTable();
+        function displayAddUserModal() {
+            $('#myModal').modal('show');
+        }
+        // Handle form submission to add an employee
+        // ...
+        const employeeForm = document.getElementById('employee-form');
+        employeeForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(employeeForm); // Create a FormData object using the form element
+
+            // Create an object to hold the form data as key-value pairs
+            const formDataObject = {};
+            formData.forEach((value, key) => {
+                formDataObject[key] = value;
+            });
+
+            try {
+                const response = await fetch('/add-employee', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json', // Set the content type to JSON
+                    },
+                    body: JSON.stringify(formDataObject), // Send the form data as JSON
+                });
+
+                if (response.ok) {
+                    fetchDataAndPopulateTable();
+                    // Data added successfully, you can update the table here if needed
+                    // Hide the form
+                    $('#myModal').modal('hide'); // Close the modal
+                } else {
+                    console.error('Error adding employee:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error adding employee:', error);
+            }
+        });
+        // Handle form submission to update an employee
+        const updateEmployeeForm = document.getElementById('update-employee-form');
+        updateEmployeeForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(updateEmployeeForm);
+            // Create an object to hold the form data as key-value pairs
+            const formDataObject = {};
+            formData.forEach((value, key) => {
+                formDataObject[key] = value;
+            });
+
+            try {
+                const response = await fetch('/update-employee', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json', // Set the content type to JSON
+                    },
+                    body: JSON.stringify(formDataObject), // Send the form data as JSON
+                });
+
+                if (response.ok) {
+                    fetchDataAndPopulateTable();
+                    // Data updated successfully, you can update the table here if needed
+                    // Hide the update modal
+                    
+                    $('#myUpdateModal').modal('hide');
+                } else {
+                    console.error('Error updating employee:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error updating employee:', error);
+            }
+        });
+
+        const deleteEmployeeForm = document.getElementById('delete-employee-form');
+        deleteEmployeeForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(deleteEmployeeForm);
+            // Create an object to hold the form data as key-value pairs
+            const formDataObject = {};
+            formData.forEach((value, key) => {
+                formDataObject[key] = value;
+            });
+
+            try {
+                const response = await fetch('/delete-employee', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json', // Set the content type to JSON
+                    },
+                    body: JSON.stringify(formDataObject), // Send the form data as JSON
+                });
+
+                if (response.ok) {
+                    fetchDataAndPopulateTable();
+                    // Data updated successfully, you can update the table here if needed
+                    // Hide the update modal
+                    $('#myDeleteModal').modal('hide');
+                } else {
+                    console.error('Error updating employee:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error updating employee:', error);
+            }
+        });
+
+    </script>
+</body>
+
+</html>
